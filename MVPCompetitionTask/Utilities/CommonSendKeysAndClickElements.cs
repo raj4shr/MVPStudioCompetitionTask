@@ -9,12 +9,15 @@ public class CommonSendKeysAndClickElements
     private IWebElement? element;
     private ScenarioContext? scenarioContext;
     WebDriverWait wait;
+    string path;
+    
 
     public CommonSendKeysAndClickElements(ScenarioContext _scenarioContext)
     {
         scenarioContext = _scenarioContext;
         driver = (IWebDriver)scenarioContext["driver"];
         wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+        path = "";
     }
 
     public void sendKeysToElement(string elementLocator, string locatorValue, string elementValue)
@@ -397,4 +400,11 @@ public class CommonSendKeysAndClickElements
         }
         return element;
     }
-}
+
+    //Method to take screenshot
+    public void TakeScreenShot()
+    {
+        path = @"C:\ExtentReports\ScreenShots\" + DateTime.Now.ToString("_MMddyyyy_hhmmsstt") + @".png"; 
+        ((ITakesScreenshot)driver).GetScreenshot().SaveAsFile(path, ScreenshotImageFormat.Png);
+    }
+ }

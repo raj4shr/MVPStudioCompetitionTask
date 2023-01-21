@@ -84,7 +84,7 @@ namespace MVPCompetitionTask.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Add a new user share skill for a user")]
-        [NUnit.Framework.TestCaseAttribute("Java", "BDD in Java", "Programming & Tech", "QA", null)]
+        [NUnit.Framework.TestCaseAttribute("Cucumber", "BDD in Java", "Programming & Tech", "QA", null)]
         [NUnit.Framework.TestCaseAttribute("NUnit", "Unit Testing", "Programming & Tech", "QA", null)]
         public virtual void AddANewUserShareSkillForAUser(string title, string description, string category, string subcategory, string[] exampleTags)
         {

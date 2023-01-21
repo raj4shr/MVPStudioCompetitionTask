@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,22 +10,29 @@ using TechTalk.SpecFlow;
 namespace MVPCompetitionTask;
 [Binding]
 public class Hooks
-    {
-        private ScenarioContext scenarioContext;
-        private IWebDriver driver;
-        
-        //constructor to get the driver from scenario context
-        public Hooks(ScenarioContext _scenarioContext)
-        {
-            scenarioContext = _scenarioContext;
-            driver = (IWebDriver)scenarioContext["driver"];
-        }
+{
+    private readonly ScenarioContext scenarioContext;
+    private IWebDriver driver;
+    private ExtentReports testReport;
 
-        //Teardown method to close the web driver after scenario
-        [AfterScenario]
-        public void ShutDownDriver()
-        {
-            scenarioContext.Clear();
-            driver.Quit();
-        }
+    //constructor to get the driver from scenario context
+    public Hooks(ScenarioContext _scenarioContext)
+    {
+        testReport = (ExtentReports)_scenarioContext["extentReport"];
+        scenarioContext = _scenarioContext;
+        driver = (IWebDriver)_scenarioContext["driver"];
     }
+
+    
+    
+
+    //Teardown method to close the web driver after scenario
+    [AfterScenario]
+    public void ShutDownDriver()
+    {
+        scenarioContext.Clear();
+        testReport.Flush();
+        driver.Quit();
+    }
+    
+}

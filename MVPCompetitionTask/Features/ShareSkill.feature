@@ -10,9 +10,9 @@ Scenario: Add a new user share skill for a user
 	Then The share skill is added to the user profile successfully
 
 	Examples: 
-	| title | description  | category           | subcategory |
-	| Java  | BDD in Java  | Programming & Tech | QA          |
-	| NUnit | Unit Testing | Programming & Tech | QA          |
+	| title    | description  | category           | subcategory |
+	| Cucumber | BDD in Java  | Programming & Tech | QA          |
+	| NUnit    | Unit Testing | Programming & Tech | QA          |
 
 
 

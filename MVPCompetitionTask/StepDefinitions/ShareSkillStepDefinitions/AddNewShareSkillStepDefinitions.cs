@@ -3,12 +3,10 @@
 public class AddNewShareSkillStepDefinitions
 {
     private readonly AddShareSkillPage ASSP;
-    private ScenarioContext scenarioContext;
 
     public AddNewShareSkillStepDefinitions(ScenarioContext _scenarioContext)
     {
-        scenarioContext = _scenarioContext;
-        ASSP = new AddShareSkillPage(scenarioContext);
+        ASSP = new AddShareSkillPage(_scenarioContext);
     }
 
     [Given(@"A new user share skill is added with '([^']*)','([^']*)', '([^']*)' and '([^']*)'")]

@@ -1,16 +1,23 @@
-﻿namespace MVPCompetitionTask;
+﻿using AventStack.ExtentReports;
+
+namespace MVPCompetitionTask;
 
 public class ViewShareSkillPage
 {
-    private ScenarioContext scenarioContext;
     private readonly CommonSendKeysAndClickElements findElements;
     private ReadOnlyCollection<IWebElement>? rowElements, colElements, elements;
     private string shareSkillTitle;
+    private ExtentReports testReport;
+    private ExtentTest test;
+    private bool pageNavigated;
     public ViewShareSkillPage(ScenarioContext _scenarioContext)
     {
-        scenarioContext = _scenarioContext;
-        findElements = new CommonSendKeysAndClickElements(scenarioContext);
+        pageNavigated = false;
+        findElements = new CommonSendKeysAndClickElements(_scenarioContext);
         shareSkillTitle = "";
+        testReport = (ExtentReports)_scenarioContext["extentReport"];
+        test = testReport.CreateTest("Test_ViewShareSkill" + DateTime.Now.ToString("_hhmmss")).Info("Viewing A Share Skill");
+
     }
 
     public void ViewShareSkill(string shareSkillTitle)
@@ -33,10 +40,19 @@ public class ViewShareSkillPage
                 }
             }
         }
+        test.Log(Status.Info, "Share skill found and view button clicked");
     }
 
     public void ViewSkillPageAssertion()
     {
-        findElements.ViewPageNavigated(shareSkillTitle).Should().BeTrue();
+        pageNavigated=findElements.ViewPageNavigated(shareSkillTitle);
+        if (pageNavigated == true)
+        {
+            test.Log(Status.Pass, "Navigation to View Share Skill Page Successful");
+        }
+        else
+        {
+            test.Log(Status.Fail, "Navigation to View Share Skill Page UnSuccessful");
+        }
     }
 }

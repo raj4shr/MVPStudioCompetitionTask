@@ -2,13 +2,11 @@
 [Binding]
 public class ViewShareSkillStepDefinitions
 {
-    private ScenarioContext scenarioContext;
     private readonly ViewShareSkillPage VSSP;
 
     public ViewShareSkillStepDefinitions(ScenarioContext _scenarioContext)
     {
-        scenarioContext = _scenarioContext;
-        VSSP = new ViewShareSkillPage(scenarioContext);
+        VSSP = new ViewShareSkillPage(_scenarioContext);
     }
 
     [Given(@"A user wnats to view a share skill with '([^']*)'")]

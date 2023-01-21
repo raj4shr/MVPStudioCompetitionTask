@@ -2,12 +2,10 @@
 [Binding]
 public class DeleteShareSkillStepDefinitions
 {
-    private ScenarioContext scenarioContext;
     private readonly DeleteShareSkillPage DSSP;
     public DeleteShareSkillStepDefinitions(ScenarioContext _scenarioContext)
     {
-        scenarioContext = _scenarioContext;
-        DSSP=new DeleteShareSkillPage(scenarioContext);
+        DSSP=new DeleteShareSkillPage(_scenarioContext);
     }
     [Given(@"A user deletes a share skill with '([^']*)'")]
     public void GivenAUserDeletesAShareSkill(string shareSkillTitle)
