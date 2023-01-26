@@ -1,6 +1,8 @@
 ﻿
 
 using AventStack.ExtentReports;
+using ExcelDataReader;
+using System.Data;
 
 namespace MVPCompetitionTask;
 
@@ -10,17 +12,26 @@ public class LoginToPortalPage
     private CommonSendKeysAndClickElements findElements;
     private ExtentTest test;
     private ExtentReports testReport;
+    private IExcelDataReader? reader;
+    private FileStream? stream;
+    private DataSet? dataset;
+    private DataTable? table;
+    private string path,username,password;
     public LoginToPortalPage(ScenarioContext _scenarioContext)
     {
+        //Encoding excel file stream
+        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+        path = username = password = "";
         driver = (IWebDriver)_scenarioContext["driver"];
         findElements = new CommonSendKeysAndClickElements(_scenarioContext);
         testReport = (ExtentReports)_scenarioContext["extentReport"];
         test = testReport.CreateTest("Test_LoginToPortal"+DateTime.Now.ToString("_hhmmss")).Info("Login Test");
+        
     }
 
     public void LogintoPortal()
     {
-        
+       
         //Opening up MVP portal running on docker image
         driver.Navigate().GoToUrl("http://localhost:5000/");
         test.Log(Status.Info, "Navigate to Url");
@@ -36,13 +47,22 @@ public class LoginToPortalPage
     {
         try
         {
+            path = @"C:\MVPCompetitionTask\MVPStudioCompetitionTask\MVPCompetitionTask\LoginCred.xlsx";
+            stream = File.Open(path, FileMode.Open, FileAccess.Read);
+            reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            dataset = reader.AsDataSet();
+            table = dataset.Tables[0];
+            username = table.Rows[1][0].ToString();
+            password = table.Rows[1][1].ToString();
             //Finding and interacting with elements using my custom common methods
-            findElements.sendKeysToElement(nameof(By.Name), "email", "raj4shr@gmail.com");
-            findElements.sendKeysToElement(nameof(By.Name), "password", "IndustryConnect2023");
+            findElements.sendKeysToElement(nameof(By.Name), "email", username);
+            findElements.sendKeysToElement(nameof(By.Name), "password", password);
             test.Log(Status.Info, "Send username and password credentials");
             findElements.clickOnElement(nameof(By.XPath), "//button[text()='Login']");
             test.Log(Status.Info, "Login Button Clicked");
             test.Log(Status.Pass, "Test Passed");
+            reader.Close();
+            stream.Close();
         }
         catch
         {
