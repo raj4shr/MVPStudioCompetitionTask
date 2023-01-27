@@ -47,10 +47,13 @@ public class LoginToPortalPage
     {
         try
         {
+            //Path of the excel file with log in credentials
             path = @"C:\MVPCompetitionTask\MVPStudioCompetitionTask\MVPCompetitionTask\LoginCred.xlsx";
             stream = File.Open(path, FileMode.Open, FileAccess.Read);
             reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
+            //storing data from the excel file as dataset
             dataset = reader.AsDataSet();
+            //Excel sheet from the file is stored as table. Since only 1 sheet present, index is 0
             table = dataset.Tables[0];
             username = table.Rows[1][0].ToString();
             password = table.Rows[1][1].ToString();
