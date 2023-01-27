@@ -49,6 +49,7 @@ public class LoginToPortalPage
         {
             //Path of the excel file with log in credentials
             path = @"C:\MVPCompetitionTask\MVPStudioCompetitionTask\MVPCompetitionTask\LoginCred.xlsx";
+            //Setting the stream for excel data reader
             stream = File.Open(path, FileMode.Open, FileAccess.Read);
             reader = ExcelReaderFactory.CreateOpenXmlReader(stream);
             //storing data from the excel file as dataset
