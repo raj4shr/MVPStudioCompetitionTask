@@ -64,6 +64,7 @@ public class LoginToPortalPage
             findElements.clickOnElement(nameof(By.XPath), "//button[text()='Login']");
             test.Log(Status.Info, "Login Button Clicked");
             test.Log(Status.Pass, "Test Passed");
+            //Closing the streams
             reader.Close();
             stream.Close();
         }
